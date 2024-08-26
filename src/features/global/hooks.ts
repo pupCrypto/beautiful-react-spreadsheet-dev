@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks.ts";
 
 
 export function useCellHeight(): number {

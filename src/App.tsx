@@ -1,13 +1,12 @@
 import React from 'react';
+import BeautifulSpreadsheet from './Spreadsheet.tsx';
 import './App.css';
 
 function App() {
   const a: string = 'asdf';
   console.log(a);
   return (
-    <div>
-      App
-    </div>
+    <BeautifulSpreadsheet />
   );
 }
 
