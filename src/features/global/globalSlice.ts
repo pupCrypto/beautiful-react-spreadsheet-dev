@@ -12,7 +12,7 @@ interface GlobalState {
 const initialState = {
   cell: {
     height: 25,
-    width: 80,
+    width: 70,
   }
 } satisfies GlobalState
 

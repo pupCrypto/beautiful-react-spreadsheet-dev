@@ -1,0 +1,14 @@
+* {
+  --border-color: gray;
+  --columns-background: lightgray;
+  --rows-background: lightgray;
+}
+
+.spreadsheet {
+  display: flex;
+  flex-direction: column;
+}
+
+.spreadsheet__rows-and-cells {
+  display: flex;
+}

@@ -1,0 +1,17 @@
+.columns {
+  display: flex;
+}
+
+.columns__corner {
+  background: var(--columns-background);
+  border: 1px solid var(--border-color);
+}
+
+.columns__corner:hover {
+  cursor: pointer;
+}
+
+.columns__column {
+  background: var(--columns-background);
+  border: 1px solid var(--border-color);
+}
