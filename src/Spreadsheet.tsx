@@ -6,8 +6,12 @@ import RowsContainer from "./rows/RowsContainer.tsx";
 export default function BeautifulSpreadsheet() {
   return (
     <table className="spreadsheet">
-      <ColumnsContainer />
-      <RowsContainer />
+      <thead>
+        <ColumnsContainer />
+      </thead>
+      <tbody>
+        <RowsContainer />
+      </tbody>
     </table>
   );
 }

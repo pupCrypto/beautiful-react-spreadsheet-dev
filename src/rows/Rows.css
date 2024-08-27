@@ -1,9 +1,6 @@
-/* .rows {
-  display: flex;
-  flex-direction: column;
-}
-
-.rows__row {
+.row {
   border: 1px solid var(--border-color);
   background: var(--rows-background);
-} */
+  font-size: 14px;
+  text-align: center;
+}

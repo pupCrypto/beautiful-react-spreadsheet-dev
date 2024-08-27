@@ -2,13 +2,9 @@
   --border-color: gray;
   --columns-background: lightgray;
   --rows-background: lightgray;
+  --global-font-weight: 400;
 }
 
-/* .spreadsheet {
-  display: flex;
-  flex-direction: column;
+.spreadsheet {
+  border-collapse: collapse;
 }
-
-.spreadsheet__rows-and-cells {
-  display: flex;
-} */

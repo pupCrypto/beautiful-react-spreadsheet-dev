@@ -4,17 +4,22 @@ import './Cell.css';
 
 
 interface PropsType {
-  defaultValue: number | string | boolean | undefined,
+  colIdx: number;
+  defaultValue?: number | string | boolean | undefined;
+  rowIdx: number;
 }
 
 export default function Cell(props: PropsType) {
   const cellHeight = useCellHeight();
-  const cellWidth = useCellWidth();
   const cellStyle = {
     height: cellHeight,
-    width: cellWidth,    
   };
+  const onClick = () => {
+    console.log(props.colIdx, props.rowIdx);
+  }
   return (
-    <div className="cell" style={cellStyle}>{props.defaultValue}</div>
+    <td className="cell" onClick={onClick} onMouseDown={() => console.log('down')}>
+      <div className="cell__input" style={cellStyle}>{props.defaultValue}</div>
+    </td>
   );
 }

@@ -1,20 +1,21 @@
 import React from "react";
-import { useCellHeight, useCellWidth } from "../features/global/hooks";
 import './Rows.css';
+import Cell from "../cell/Cell";
+import { useKeyRows } from "../hooks/rows";
+import { useKeyColumns } from "../hooks/columns";
+import { genCellKey } from "../utils/spreadsheet";
 
 export default function Rows() {
-  const cellHeight = useCellHeight();
-  const cellWidth = useCellWidth();
-
+  const rows = useKeyRows();
+  const columns = useKeyColumns();
   return (
     <>
-      {[1, 2, 3, 4, 5].map(num => (
-        <tr
-          style={{
-            height: cellHeight,
-            width: cellWidth,
-          }}
-        > <td>{num}</td></tr>  // todo move td to cell
+      {rows.map((num, rowIdx) => (
+        <tr key={rowIdx}>
+          <td className="row">{num}</td>
+          {columns.map((elem, colIdx) => <Cell key={genCellKey(colIdx, rowIdx)} colIdx={colIdx} rowIdx={rowIdx} />)}
+
+        </tr>
       ))}
     </>
   );

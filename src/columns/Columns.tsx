@@ -1,6 +1,7 @@
 import React from "react";
 import "./Columns.css";
 import { useCellHeight, useCellWidth } from "../features/global/hooks";
+import { useKeyColumns } from "../hooks/columns";
 
 interface PropsType {
   onCornerClick: () => void
@@ -9,8 +10,9 @@ interface PropsType {
 export default function Columns(props: PropsType) {
   const cellHeight = useCellHeight();
   const cellWidth = useCellWidth();
+  const columns = useKeyColumns();
   return (
-    <tr className="columns">
+    <tr className="columns" style={{width: 800}}>
       <th
         className="columns__corner"
         onClick={props.onCornerClick}
@@ -19,8 +21,9 @@ export default function Columns(props: PropsType) {
           width: cellWidth,
         }}
       />
-      {['A', 'B', 'C', 'D', 'E'].map(l => (
+      {columns.map((l, index) => (
         <th
+          key={index}
           className="columns__column"
           style={{
             height: cellHeight,
