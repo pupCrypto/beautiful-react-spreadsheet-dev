@@ -1,4 +1,4 @@
-.rows {
+/* .rows {
   display: flex;
   flex-direction: column;
 }
@@ -6,4 +6,4 @@
 .rows__row {
   border: 1px solid var(--border-color);
   background: var(--rows-background);
-}
+} */

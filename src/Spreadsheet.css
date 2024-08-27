@@ -4,11 +4,11 @@
   --rows-background: lightgray;
 }
 
-.spreadsheet {
+/* .spreadsheet {
   display: flex;
   flex-direction: column;
 }
 
 .spreadsheet__rows-and-cells {
   display: flex;
-}
+} */

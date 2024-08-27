@@ -7,16 +7,15 @@ export default function Rows() {
   const cellWidth = useCellWidth();
 
   return (
-    <div className="rows">
+    <>
       {[1, 2, 3, 4, 5].map(num => (
-        <div
-          className="rows__row"
+        <tr
           style={{
             height: cellHeight,
             width: cellWidth,
           }}
-        >{num}</div>
+        > <td>{num}</td></tr>  // todo move td to cell
       ))}
-    </div>
+    </>
   );
 }

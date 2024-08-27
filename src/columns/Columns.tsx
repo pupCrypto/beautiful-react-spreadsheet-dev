@@ -10,8 +10,8 @@ export default function Columns(props: PropsType) {
   const cellHeight = useCellHeight();
   const cellWidth = useCellWidth();
   return (
-    <div className="columns">
-      <div
+    <tr className="columns">
+      <th
         className="columns__corner"
         onClick={props.onCornerClick}
         style={{
@@ -20,14 +20,14 @@ export default function Columns(props: PropsType) {
         }}
       />
       {['A', 'B', 'C', 'D', 'E'].map(l => (
-        <div
+        <th
           className="columns__column"
           style={{
             height: cellHeight,
             width: cellWidth,
           }}
-        >{l}</div>
+        >{l}</th>
       ))}
-    </div>
+    </tr>
   );
 }
