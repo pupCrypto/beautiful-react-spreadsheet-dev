@@ -1,6 +1,5 @@
 import React from "react";
-import { useCellHeight, useCellWidth } from "../features/global/hooks.ts";
-import VDelimiter from "../delimiter/VDelimiter.tsx";
+import { useCellHeight } from "../features/global/hooks.ts";
 import './Cell.css';
 
 
@@ -29,7 +28,6 @@ export default function Cell(props: PropsType) {
   return (
     <td className="cell" onClick={onClick} onMouseDown={() => console.log('down')}>
       <div className="cell__container">
-        <VDelimiter />
         <div
           ref={inputRef}
           contentEditable

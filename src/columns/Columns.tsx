@@ -2,6 +2,7 @@ import React from "react";
 import "./Columns.css";
 import { useCellHeight, useCellWidth } from "../features/global/hooks";
 import { useKeyColumns } from "../hooks/columns";
+import Column from "./column/Column";
 
 interface PropsType {
   onCornerClick: () => void
@@ -22,14 +23,13 @@ export default function Columns(props: PropsType) {
         }}
       />
       {columns.map((l, index) => (
-        <th
+        <Column
           key={index}
-          className="columns__column"
-          style={{
-            height: cellHeight,
-            width: cellWidth,
-          }}
-        >{l}</th>
+          index={index}
+          label={l}
+          defaultHeight={cellHeight}
+          defaultWidth={cellWidth}
+        />
       ))}
     </tr>
   );

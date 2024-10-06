@@ -2,10 +2,14 @@
   border-right: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   font-size: 14px;
-  overflow: hidden;
   max-width: 95px;
+}
+
+.cell:hover {
+  cursor: cell;
 }
 
 .cell__input:focus {
   outline: none;
+  cursor: text;
 }
