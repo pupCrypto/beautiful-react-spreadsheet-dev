@@ -1,6 +1,7 @@
 import React from "react";
 import { useCellHeight } from "../features/global/hooks.ts";
 import './Cell.css';
+import { isAction } from "@reduxjs/toolkit";
 
 
 interface PropsType {
@@ -13,6 +14,7 @@ interface PropsType {
 }
 
 export default function Cell(props: PropsType) {
+  const [isEditing, setIsEditing] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const cellHeight = useCellHeight();
   
@@ -33,19 +35,43 @@ export default function Cell(props: PropsType) {
   const onMouseUp = () => {
     props.onCellRelease?.(props.colIdx, props.rowIdx);
   }
+  const onDoubleClick = () => {
+    setIsEditing(true);
+  }
+
+  const onInput = () => {
+    if (!isEditing) {
+      setIsEditing(true);
+    }
+  }
+
+  React.useEffect(() => {
+    if (isEditing) {
+      inputRef.current?.focus();
+    }
+  }, [isEditing]);
+
+  React.useEffect(() => {
+    if (!props.isActive) {
+      setIsEditing(false);
+    }
+  }, [props.isActive]);
   return (
     <td
-      is-selected={props.isActive && 'yes'}
+      is-selected={props.isActive ? 'yes' : undefined}
       className="cell"
       onClick={onClick}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
+      onDoubleClick={onDoubleClick}
     >
       <div className="cell__container">
         <div
           ref={inputRef}
-          // contentEditable
+          is-editing={isEditing ? 'yes' : undefined}
           className="cell__input"
+          onInput={onInput}
+          contentEditable
           style={cellStyle}
         >{props.defaultValue}</div>
       </div>

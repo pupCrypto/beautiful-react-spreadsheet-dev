@@ -5,11 +5,19 @@
   max-width: 95px;
 }
 .cell[is-selected] {
-  outline: 2px solid red;
+  outline: 2px solid rgb(0, 110, 255);
 }
 
 .cell:hover {
   cursor: cell;
+}
+
+.cell__input {
+  caret-color: transparent;
+}
+
+.cell__input[is-editing] {
+  caret-color: black;
 }
 
 .cell__input:focus {

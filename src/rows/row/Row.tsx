@@ -17,6 +17,9 @@ export default function Row(props: PropsType) {
   const onCellPressed = (colIdx: number, rowIdx: number) => {
     setActiveCell(colIdx, rowIdx);
   }
+  const checkIfActive = (colIdx: number, rowIdx: number) => {
+    return activeCell.colIdx === colIdx && activeCell.rowIdx === rowIdx;
+  }
   return (
     <tr key={props.index}>
       <td className="row">{props.value}</td>
@@ -26,7 +29,7 @@ export default function Row(props: PropsType) {
           colIdx={colIdx}
           rowIdx={props.index}
           onCellPressed={onCellPressed}
-          isActive={activeCell.colIdx === colIdx && activeCell.rowIdx === props.index}
+          isActive={checkIfActive(colIdx, props.index)}
         />
         ))}
     </tr>
