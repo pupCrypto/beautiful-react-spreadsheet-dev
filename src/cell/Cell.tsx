@@ -5,13 +5,15 @@ import './Cell.css';
 
 interface PropsType {
   colIdx: number;
-  defaultValue?: number | string | boolean | undefined;
   rowIdx: number;
+  isActive?: boolean;
+  defaultValue?: number | string | boolean | undefined;
+  onCellPressed?: (colIdx: number, rowIdx: number) => void;
+  onCellRelease?: (colIdx: number, rowIdx: number) => void;
 }
 
 export default function Cell(props: PropsType) {
   const inputRef = React.useRef<HTMLInputElement>(null);
-
   const cellHeight = useCellHeight();
   
   const cellStyle = {
@@ -23,14 +25,26 @@ export default function Cell(props: PropsType) {
   }
 
   const onClick = () => {
-    console.log(props.colIdx, props.rowIdx, getValue());
+    // console.log(props.colIdx, props.rowIdx, getValue());
+  }
+  const onMouseDown = () => {
+    props.onCellPressed?.(props.colIdx, props.rowIdx);
+  }
+  const onMouseUp = () => {
+    props.onCellRelease?.(props.colIdx, props.rowIdx);
   }
   return (
-    <td className="cell" onClick={onClick} onMouseDown={() => console.log('down')}>
+    <td
+      is-selected={props.isActive && 'yes'}
+      className="cell"
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+    >
       <div className="cell__container">
         <div
           ref={inputRef}
-          contentEditable
+          // contentEditable
           className="cell__input"
           style={cellStyle}
         >{props.defaultValue}</div>

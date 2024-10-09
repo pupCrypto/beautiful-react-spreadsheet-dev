@@ -4,6 +4,9 @@
   font-size: 14px;
   max-width: 95px;
 }
+.cell[is-selected] {
+  outline: 2px solid red;
+}
 
 .cell:hover {
   cursor: cell;

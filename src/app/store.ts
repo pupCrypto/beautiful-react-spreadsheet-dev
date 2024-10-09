@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import globalReducer from '../features/global/globalSlice.ts';
+import cellsReducer from '../features/cells/cellsSlice.ts';
 
 const store = configureStore({
   reducer: {
     global: globalReducer,
+    cells: cellsReducer,
   },
 })
 
