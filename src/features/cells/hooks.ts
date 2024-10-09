@@ -10,6 +10,16 @@ export function useIsActiveCell(colIdx: number, rowIdx: number): boolean {
   return activeCell.colIdx === colIdx && activeCell.rowIdx === rowIdx;
 }
 
+export function useIsActiveColumn(colIdx: number): boolean {
+  const activeCell = useAppSelector(state => state.cells.activeCell);
+  return activeCell.colIdx === colIdx;
+}
+
+export function useIsActiveRow(rowIdx: number): boolean {
+  const activeCell = useAppSelector(state => state.cells.activeCell);
+  return activeCell.rowIdx === rowIdx;
+}
+
 export function useDispatchSetActiveCell(): (colIdx: number, rowIdx: number) => void {
   const dispatch = useAppDispatch();
   return (colIdx: number, rowIdx: number) => {

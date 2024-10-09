@@ -1,3 +1,17 @@
+.columns__column {
+  --active-background-color: rgb(216, 233, 255);
+}
+
+.columns__column {
+  border: 1px solid var(--border-color);
+  font-weight: var(--global-font-weight);
+  font-size: 14px;
+}
+
+.columns__column.active {
+  background-color: var(--active-background-color);
+}
+
 .column__container {
   display: flex;
   justify-content: space-between;
@@ -10,7 +24,11 @@
 
 .column__edge-detector {
   width: 5px;
-  background: red;
+  background: white;  /* do not forget about it */
+}
+
+.columns__column.active .column__edge-detector {
+  background-color: var(--active-background-color);
 }
 
 .column__delimiter {

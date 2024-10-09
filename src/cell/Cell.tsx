@@ -45,6 +45,11 @@ export default function Cell(props: PropsType) {
     }
   }
 
+  const onContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    console.log('context menu');
+  }
+
   React.useEffect(() => {
     if (isEditing) {
       inputRef.current?.focus();
@@ -65,7 +70,10 @@ export default function Cell(props: PropsType) {
       onMouseUp={onMouseUp}
       onDoubleClick={onDoubleClick}
     >
-      <div className="cell__container">
+      <div
+        className="cell__container"
+        onContextMenu={onContextMenu}
+      >
         <div
           ref={inputRef}
           is-editing={isEditing ? 'yes' : undefined}

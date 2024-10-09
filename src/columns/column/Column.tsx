@@ -1,5 +1,6 @@
 import React from "react";
 import "./Column.css";
+import { useIsActiveColumn } from "../../features/cells/hooks";
 
 interface PropsType {
   index: number;
@@ -28,10 +29,11 @@ function ColumnEdgeDetector(props: { colIdx: number, side: 'left' | 'right', hei
 export default function Column(props: PropsType) {
   const [height, setHeight] = React.useState(props.defaultHeight);
   const [width, setWidth] = React.useState(props.defaultWidth);
+  const isActiveColumn = useIsActiveColumn(props.index);
   return (
     <>
       <th
-        className="columns__column"
+        className={`columns__column ${isActiveColumn ? 'active' : ''}`}
         style={{
           height: height,
           width: width,

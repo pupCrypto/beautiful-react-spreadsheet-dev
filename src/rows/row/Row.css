@@ -1,0 +1,7 @@
+.row {
+  --active-background-color: rgb(216, 233, 255);
+}
+
+.row.active {
+  background-color: var(--active-background-color);
+}

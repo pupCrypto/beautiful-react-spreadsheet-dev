@@ -2,7 +2,7 @@
   overflow: scroll;
 }
 
-.columns__column, .columns__corner {
+.columns__corner {
   border: 1px solid var(--border-color);
   font-weight: var(--global-font-weight);
   font-size: 14px;

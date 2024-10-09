@@ -13,6 +13,7 @@ interface PropsType {
 
 export default function Row(props: PropsType) {
   const activeCell = useActiveCell();
+  const isActiveRow = activeCell.rowIdx === props.index;
   const setActiveCell = useDispatchSetActiveCell();
   const onCellPressed = (colIdx: number, rowIdx: number) => {
     setActiveCell(colIdx, rowIdx);
@@ -22,7 +23,7 @@ export default function Row(props: PropsType) {
   }
   return (
     <tr key={props.index}>
-      <td className="row">{props.value}</td>
+      <td className={`row ${isActiveRow ? 'active' : ''}`}>{props.value}</td>
       {props.columns.map((elem, colIdx) => (
         <Cell
           key={genCellKey(colIdx, props.index)}
