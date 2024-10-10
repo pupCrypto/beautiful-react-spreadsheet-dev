@@ -4,4 +4,5 @@
 
 .row.active {
   background-color: var(--active-background-color);
+  font-weight: bold;
 }

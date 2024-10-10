@@ -11,6 +11,10 @@
 .columns__column.active {
   background-color: var(--active-background-color);
 }
+.columns__column.active .column__label {
+  font-weight: bold;
+  color: black;
+}
 
 .column__container {
   display: flex;
