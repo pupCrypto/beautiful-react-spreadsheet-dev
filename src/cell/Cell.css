@@ -14,6 +14,7 @@
 
 .cell__input {
   caret-color: transparent;
+  background: white;
 }
 
 .cell__input[is-editing] {

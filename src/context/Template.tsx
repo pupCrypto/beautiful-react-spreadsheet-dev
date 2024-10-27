@@ -1,6 +1,7 @@
 import React from "react";
+import "./Template.css";
 
-export default function ContextMenu() {
+export default function Template() {
   return (
     <div className="context-menu">
       <div className="context-menu__item">

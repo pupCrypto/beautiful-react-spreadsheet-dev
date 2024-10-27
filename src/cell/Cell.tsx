@@ -1,5 +1,6 @@
 import React from "react";
 import { useCellHeight } from "../features/global/hooks.ts";
+import { ContextMenuRefContext } from "../Spreadsheet.tsx";
 import './Cell.css';
 
 
@@ -13,6 +14,7 @@ interface PropsType {
 }
 
 export default function Cell(props: PropsType) {
+  const contextMenuRef = React.useContext(ContextMenuRefContext);
   const [isEditing, setIsEditing] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const cellHeight = useCellHeight();
@@ -58,7 +60,7 @@ export default function Cell(props: PropsType) {
 
   const onContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    console.log('context menu');
+    contextMenuRef.current?.show(e);
   }
 
   React.useEffect(() => {
@@ -82,11 +84,11 @@ export default function Cell(props: PropsType) {
       onMouseUp={onMouseUp}
       onDoubleClick={onDoubleClick}
       onMouseEnter={onMouseEnter}
+      onContextMenu={onContextMenu}
       onMouseLeave={onMouseLeave}
     >
       <div
         className="cell__container"
-        onContextMenu={onContextMenu}
       >
         <div
           ref={inputRef}

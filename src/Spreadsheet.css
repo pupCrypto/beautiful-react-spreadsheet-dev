@@ -8,3 +8,10 @@
 .spreadsheet {
   border-collapse: collapse;
 }
+
+.spreadsheet__context-menu {
+  background-color: white;
+  padding: 5px 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
