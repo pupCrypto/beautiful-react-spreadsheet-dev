@@ -2,6 +2,7 @@ import React from "react";
 import { useCellHeight } from "../features/global/hooks.ts";
 import { ContextMenuRefContext } from "../Spreadsheet.tsx";
 import './Cell.css';
+import { useOverflown } from "../hooks/overflow.ts";
 
 
 interface PropsType {
@@ -20,6 +21,7 @@ export default function Cell(props: PropsType) {
   const cellHeight = useCellHeight();
   const [isHovered, setIsHovered] = React.useState(false);
   const [isPressed, setIsPressed] = React.useState(false);
+  const isOverflown = useOverflown(inputRef);
   
   const cellStyle = {
     height: cellHeight,
@@ -86,6 +88,7 @@ export default function Cell(props: PropsType) {
       onMouseEnter={onMouseEnter}
       onContextMenu={onContextMenu}
       onMouseLeave={onMouseLeave}
+      style={{borderRight: isOverflown && 'none'}} // TODO: here
     >
       <div
         className="cell__container"
