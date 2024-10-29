@@ -1,11 +1,14 @@
 import React from "react";
 import { useCellHeight } from "../features/global/hooks.ts";
 import { ContextMenuRefContext } from "../Spreadsheet.tsx";
+import { useInMerge } from "../features/merge/hooks.ts";
 import './Cell.css';
 import { useOverflown } from "../hooks/overflow.ts";
 
 
 interface PropsType {
+  rowSpan: number;
+  colSpan: number;
   colIdx: number;
   rowIdx: number;
   isActive?: boolean;
@@ -88,7 +91,8 @@ export default function Cell(props: PropsType) {
       onMouseEnter={onMouseEnter}
       onContextMenu={onContextMenu}
       onMouseLeave={onMouseLeave}
-      style={{borderRight: isOverflown && 'none'}} // TODO: here
+      colSpan={props.colSpan}
+      rowSpan={props.rowSpan}
     >
       <div
         className="cell__container"

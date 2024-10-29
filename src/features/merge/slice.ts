@@ -7,7 +7,7 @@ interface MergeState {
 }
 
 const initialState = {
-  globalMerge: [[true]],
+  globalMerge: Array(10).fill(0).map((elem, index) => Array(10).fill(false)),
 } satisfies MergeState;
 
 const mergeSlice = createSlice({
@@ -23,4 +23,5 @@ const mergeSlice = createSlice({
   },
 });
 
+export const { setBitmap, merge } = mergeSlice.actions;
 export default mergeSlice.reducer;

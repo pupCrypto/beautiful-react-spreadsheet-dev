@@ -1,7 +1,11 @@
+import { useDispatchSetMerge } from "./features/merge/hooks";
+
+
 export function useApi() {
+  const merge = useDispatchSetMerge();
   return {
     mergeCells: (fromCell: {colIdx: number, rowIdx: number}, toCell: {colIdx: number, rowIdx: number}) => {
-      console.log(fromCell, toCell);
+      merge(fromCell, toCell);
     },
     setWidth: (colIdx: number, rowIdx: number, width: number) => {
       console.log(colIdx, rowIdx, width);
