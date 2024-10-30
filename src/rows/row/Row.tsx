@@ -24,24 +24,50 @@ export default function Row(props: PropsType) {
   const checkIfActive = (colIdx: number, rowIdx: number) => {
     return activeCell.colIdx === colIdx && activeCell.rowIdx === rowIdx;
   }
+
+  const getColRowSpan = (colIdx: number, rowIdx: number, pass: boolean) => {
+    var colSpan = 1;
+    var rowSpan = 1;
+    if (pass) {
+      return { colSpan, rowSpan };
+    }
+    if (checkInMergeArea(mergeBitmap, colIdx, rowIdx)) {
+      var prevColIdx = colIdx;
+      for (++colIdx; checkInMergeArea(mergeBitmap, colIdx, rowIdx); ++colSpan, ++colIdx) {} 
+      for (++rowIdx; checkInMergeArea(mergeBitmap, prevColIdx, rowIdx); ++rowSpan, ++rowIdx) {}
+    }
+    return {
+      colSpan,
+      rowSpan,
+    };
+  };
+
+  const checkMustPass = (colIdx: number, rowIdx: number) => {
+    if (
+      checkInMergeArea(mergeBitmap, colIdx, rowIdx) &&
+      (
+        checkInMergeArea(mergeBitmap, colIdx - 1, rowIdx) ||
+        checkInMergeArea(mergeBitmap, colIdx, rowIdx - 1)
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
   return (
     <tr key={props.index}>
       <td className={`row ${isActiveRow ? 'active' : ''}`}>{props.value}</td>
       {props.columns.map((elem, colIdx) => {
         var rowIdx = props.index;
-        var pass = false;
-        if (checkInMergeArea(mergeBitmap, colIdx, rowIdx)) {  // TODO: here need some logic
-          if (
-            checkInMergeArea(mergeBitmap, colIdx - 1, rowIdx) ||
-            checkInMergeArea(mergeBitmap, colIdx , rowIdx - 1)
-          ) {
-            console.log('here', colIdx, rowIdx)
-          }
-        }
+        var pass = checkMustPass(colIdx, rowIdx);
+        var {colSpan, rowSpan} = getColRowSpan(colIdx, rowIdx, pass);
+        // pass && console.log(rowIdx, colIdx);
         return (
-          pass ? undefined : <Cell
-            colSpan={1}
-            rowSpan={1}
+          pass ?
+          undefined :
+          <Cell
+            colSpan={colSpan}
+            rowSpan={rowSpan}
             key={genCellKey(colIdx, props.index)}
             colIdx={colIdx}
             rowIdx={props.index}

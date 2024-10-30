@@ -10,7 +10,7 @@ export const ContextMenuRefContext = React.createContext<React.RefObject<Context
 export default function BeautifulSpreadsheet() {
   const cm = React.useRef(null);
   const api = useApi();
-  api.mergeCells({ colIdx: 0, rowIdx: 0 }, { colIdx: 1, rowIdx: 0 });
+  api.mergeCells({ colIdx: 0, rowIdx: 0 }, { colIdx: 1, rowIdx: 2 });
   return (
     <>
       <ContextMenuRefContext.Provider value={cm}>

@@ -2,10 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface CellsState {
+  cells: Array<Array<object>>;
   activeCell: {
     colIdx?: number,
     rowIdx?: number,
-  },
+  };
   selectedRange: {
     start: {
       colIdx?: number,
@@ -19,6 +20,7 @@ interface CellsState {
 }
 
 const initialState = {
+  cells: Array(10).fill(0).map((elem, index) => Array(10).fill(Object.assign({}))),
   activeCell: {
     colIdx: -1,
     rowIdx: -1,

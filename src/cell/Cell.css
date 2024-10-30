@@ -11,7 +11,9 @@
 .cell:hover {
   cursor: cell;
 }
-
+.cell__container {
+  margin-bottom: auto;
+}
 .cell__input {
   caret-color: transparent;
   background: white;

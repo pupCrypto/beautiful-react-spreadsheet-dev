@@ -1,3 +1,3 @@
-var merge = {
-  '0-0': '0-1'
-}
+const assert = require('assert');
+
+assert(1 === 2);

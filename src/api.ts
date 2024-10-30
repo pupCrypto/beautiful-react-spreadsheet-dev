@@ -5,6 +5,12 @@ export function useApi() {
   const merge = useDispatchSetMerge();
   return {
     mergeCells: (fromCell: {colIdx: number, rowIdx: number}, toCell: {colIdx: number, rowIdx: number}) => {
+      if (fromCell.colIdx > toCell.colIdx) {
+        throw new Error("toCell.colIdx must be greater than fromCell.colIdx");
+      }
+      if (fromCell.rowIdx > toCell.rowIdx) {
+        throw new Error("toCell.rowIdx must be greater than fromCell.rowIdx");
+      }
       merge(fromCell, toCell);
     },
     setWidth: (colIdx: number, rowIdx: number, width: number) => {
