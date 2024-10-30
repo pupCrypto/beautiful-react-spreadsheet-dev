@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import globalReducer from '../features/global/globalSlice.ts';
-import cellsReducer from '../features/cells/cellsSlice.ts';
+import cellsReducer from '../features/cells/slice.ts';
 import mergeReducer from '../features/merge/slice.ts';
 
 const store = configureStore({

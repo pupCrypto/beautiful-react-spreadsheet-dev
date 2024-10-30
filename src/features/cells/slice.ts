@@ -2,7 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface CellsState {
-  cells: Array<Array<object>>;
+  cells: Array<Array<{
+    value?: string;
+    bold?: boolean;
+    italic?: boolean;
+    font?: string;
+    color?: string;
+    underline?: boolean;
+    fontSize?: number;
+  }>>;
   activeCell: {
     colIdx?: number,
     rowIdx?: number,
@@ -41,6 +49,9 @@ const cellsSlice = createSlice({
   name: 'cells',
   initialState,
   reducers: {
+    setCellValue: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number, value: string }>) => {
+      state.cells[action.payload.rowIdx][action.payload.colIdx].value = action.payload.value;
+    },
     setActiveCell: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number }>) => {
       state.activeCell = action.payload;
     },
@@ -50,5 +61,5 @@ const cellsSlice = createSlice({
   },
 });
 
-export const { setActiveCell, setSelectedRange } = cellsSlice.actions;
+export const { setActiveCell, setSelectedRange, setCellValue } = cellsSlice.actions;
 export default cellsSlice.reducer;

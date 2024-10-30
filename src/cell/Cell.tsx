@@ -1,7 +1,7 @@
 import React from "react";
 import { useCellHeight } from "../features/global/hooks.ts";
 import { ContextMenuRefContext } from "../Spreadsheet.tsx";
-import { useInMerge } from "../features/merge/hooks.ts";
+import { useCellApi } from "../api.ts";
 import './Cell.css';
 import { useOverflown } from "../hooks/overflow.ts";
 
@@ -18,16 +18,19 @@ interface PropsType {
 }
 
 export default function Cell(props: PropsType) {
+  const api = useCellApi(props.colIdx, props.rowIdx);
   const contextMenuRef = React.useContext(ContextMenuRefContext);
   const [isEditing, setIsEditing] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const cellHeight = useCellHeight();
+  const [value, setValue] = React.useState<string | undefined>();
   const [isHovered, setIsHovered] = React.useState(false);
   const [isPressed, setIsPressed] = React.useState(false);
   const isOverflown = useOverflown(inputRef);
   
   const cellStyle = {
     height: cellHeight,
+    fontWeight: api.bold ? 'bold' : 'normal',
   };
 
   const getValue = () => {
@@ -61,6 +64,7 @@ export default function Cell(props: PropsType) {
     if (!isEditing) {
       setIsEditing(true);
     }
+    api.value = getValue();
   }
 
   const onContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -79,6 +83,10 @@ export default function Cell(props: PropsType) {
       setIsEditing(false);
     }
   }, [props.isActive]);
+
+  React.useEffect(() => {
+    setValue(api.value);
+  }, []);
 
   return (
     <td
@@ -105,7 +113,7 @@ export default function Cell(props: PropsType) {
           contentEditable
           style={cellStyle}
           spellCheck={false}
-        >{props.defaultValue}</div>
+        >{value}</div>
       </div>
     </td>
   );

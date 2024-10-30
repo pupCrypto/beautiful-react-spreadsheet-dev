@@ -11,6 +11,8 @@ export default function BeautifulSpreadsheet() {
   const cm = React.useRef(null);
   const api = useApi();
   api.mergeCells({ colIdx: 0, rowIdx: 0 }, { colIdx: 1, rowIdx: 2 });
+  const cell = api.cell(0, 0);
+  cell.value = 'asdf';
   return (
     <>
       <ContextMenuRefContext.Provider value={cm}>
