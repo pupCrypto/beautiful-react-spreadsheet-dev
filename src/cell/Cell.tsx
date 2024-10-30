@@ -27,10 +27,12 @@ export default function Cell(props: PropsType) {
   const [isHovered, setIsHovered] = React.useState(false);
   const [isPressed, setIsPressed] = React.useState(false);
   const isOverflown = useOverflown(inputRef);
-  
-  const cellStyle = {
+
+  const cellStyle = {  // TODO: redo on classes
     height: cellHeight,
     fontWeight: api.bold ? 'bold' : 'normal',
+    fontStyle: api.italic ? 'italic' : 'normal',
+    fontSize: api.fontSize,
   };
 
   const getValue = () => {

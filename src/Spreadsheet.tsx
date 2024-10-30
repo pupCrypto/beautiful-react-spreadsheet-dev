@@ -2,7 +2,7 @@ import React from "react";
 import ColumnsContainer from "./columns/ColumnsContainer.tsx";
 import RowsContainer from "./rows/RowsContainer.tsx";
 import { ContextMenu } from "primereact/contextmenu";
-import { useApi } from "./api.ts";
+import { useApi, useCellApi } from "./api.ts";
 import "./Spreadsheet.css";
 
 export const ContextMenuRefContext = React.createContext<React.RefObject<ContextMenu> | null>(null);
@@ -10,9 +10,13 @@ export const ContextMenuRefContext = React.createContext<React.RefObject<Context
 export default function BeautifulSpreadsheet() {
   const cm = React.useRef(null);
   const api = useApi();
-  api.mergeCells({ colIdx: 0, rowIdx: 0 }, { colIdx: 1, rowIdx: 2 });
-  const cell = api.cell(0, 0);
-  cell.value = 'asdf';
+  const cellApi = useCellApi(0, 0);
+  React.useEffect(() => {
+    api.mergeCells({ colIdx: 0, rowIdx: 0 }, { colIdx: 1, rowIdx: 2 });
+    cellApi.bold = true;
+    cellApi.italic = true;
+    cellApi.fontSize = 20;
+  }, []);
   return (
     <>
       <ContextMenuRefContext.Provider value={cm}>

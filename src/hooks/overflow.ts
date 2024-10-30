@@ -16,7 +16,7 @@ export function useOverflown(ref: React.RefObject<HTMLDivElement>) {
     if (ref.current === null) return;
     ref.current.addEventListener('input', inputListener);
     return () => {
-      ref.current.removeEventListener('input', inputListener);
+      ref.current?.removeEventListener('input', inputListener);
     };
   }, [ref]);
   return isOverflown;

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-interface CellsState {
+export interface CellsState {
   cells: Array<Array<{
     value?: string;
     bold?: boolean;
@@ -49,6 +49,17 @@ const cellsSlice = createSlice({
   name: 'cells',
   initialState,
   reducers: {
+    editCell: (
+      state: CellsState,
+      action: PayloadAction<{
+        colIdx: number,
+        rowIdx: number,
+        data: object
+      }>) => {
+      var oldCell = state.cells[action.payload.rowIdx][action.payload.colIdx];
+      var newCell = Object.assign({}, oldCell, action.payload.data);
+      state.cells[action.payload.rowIdx][action.payload.colIdx] = newCell;
+    },
     setCellValue: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number, value: string }>) => {
       state.cells[action.payload.rowIdx][action.payload.colIdx].value = action.payload.value;
     },
@@ -61,5 +72,5 @@ const cellsSlice = createSlice({
   },
 });
 
-export const { setActiveCell, setSelectedRange, setCellValue } = cellsSlice.actions;
+export const { editCell, setActiveCell, setSelectedRange, setCellValue } = cellsSlice.actions;
 export default cellsSlice.reducer;

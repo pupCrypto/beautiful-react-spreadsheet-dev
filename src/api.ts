@@ -1,8 +1,13 @@
 import {
-  useCell,
+  useCellFontSize,
+  useDispatchSetFontSize,
+  useCellItalic,
+  useDispatchSetItalic,
   useCellValue,
+  useCellBold,
+  useDispatchSetBold,
   useCellsSelector,
-  useDispatchSetCellValue
+  useDispatchSetCellValue,
 } from "./features/cells/hooks";
 import { useDispatchSetMerge } from "./features/merge/hooks";
 
@@ -43,14 +48,36 @@ export function useApi() {
 }
 
 export function useCellApi(colIdx: number, rowIdx: number) {
-  const cell = useCell(colIdx, rowIdx);
   const value = useCellValue(colIdx, rowIdx);
   const setCellValue = useDispatchSetCellValue();
+
+  const italic = useCellItalic(colIdx, rowIdx);
+  const setItalic = useDispatchSetItalic(colIdx, rowIdx);
+
+  const bold = useCellBold(colIdx, rowIdx);
+  const setBold = useDispatchSetBold(colIdx, rowIdx);
+
+  const fontSize = useCellFontSize(colIdx, rowIdx);
+  const setFontSize = useDispatchSetFontSize(colIdx, rowIdx);
   return {
-    get bold() {
-      return cell.bold || false;
+    get fontSize() {
+      return fontSize || 12;
     },
-    set bold(v: boolean) {},
+    set fontSize(v: number) {
+      setFontSize(v);
+    },
+    get bold() {
+      return bold || false;
+    },
+    set bold(v: boolean) {
+      setBold(v);
+    },
+    get italic() {
+      return italic || false;
+    },
+    set italic(v: boolean) {
+      setItalic(v);
+    },
     get value() {
       return value;
     },
