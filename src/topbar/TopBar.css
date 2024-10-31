@@ -1,0 +1,14 @@
+.topbar {
+  height: 40px;
+  background-color: #f0f4f9;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+}
+.topbar__bold {
+  font-weight: bold;
+}
+.topbar__italic {
+  font-style: italic;
+  font-weight: bold;
+}

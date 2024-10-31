@@ -1,6 +1,7 @@
 import React from "react";
 import ColumnsContainer from "./columns/ColumnsContainer.tsx";
 import RowsContainer from "./rows/RowsContainer.tsx";
+import TopBar from "./topbar/TopBar.tsx";
 import { ContextMenu } from "primereact/contextmenu";
 import { useApi, useCellApi } from "./api.ts";
 import "./Spreadsheet.css";
@@ -18,6 +19,7 @@ export default function BeautifulSpreadsheet() {
   return (
     <>
       <ContextMenuRefContext.Provider value={cm}>
+        <TopBar />
         <table className="spreadsheet">
           <thead>
             <ColumnsContainer />

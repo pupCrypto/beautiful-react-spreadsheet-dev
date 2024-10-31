@@ -37,6 +37,11 @@ export function useActiveCell() {
   return useAppSelector(state => state.cells.activeCell);
 }
 
+export function useExtendedActiveCell() {
+  const activeCell = useActiveCell();
+  return useAppSelector(state => state.cells.cells[activeCell.rowIdx][activeCell.colIdx]);
+}
+
 export function useCell(colIdx: number, rowIdx: number) {
   return useAppSelector(state => state.cells.cells[rowIdx][colIdx]);
 }

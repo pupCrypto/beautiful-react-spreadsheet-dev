@@ -12,8 +12,8 @@ export interface CellsState {
     fontSize?: number;
   }>>;
   activeCell: {
-    colIdx?: number,
-    rowIdx?: number,
+    colIdx: number,
+    rowIdx: number,
   };
   selectedRange: {
     start: {
@@ -30,8 +30,8 @@ export interface CellsState {
 const initialState = {
   cells: Array(10).fill(0).map((elem, index) => Array(10).fill(Object.assign({}))),
   activeCell: {
-    colIdx: -1,
-    rowIdx: -1,
+    colIdx: 0,
+    rowIdx: 0,
   },
   selectedRange: {
     start: {
