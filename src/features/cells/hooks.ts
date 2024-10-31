@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import { editCell, setActiveCell, setCellValue } from "./slice.ts";
+import { useMergeBitmap } from "../merge/hooks";
 
 
 export function useCellFontSize(colIdx: number, rowIdx: number) {
@@ -59,11 +60,31 @@ export function useIsActiveCell(colIdx: number, rowIdx: number): boolean {
 
 export function useIsActiveColumn(colIdx: number): boolean {
   const activeCell = useAppSelector(state => state.cells.activeCell);
+  const mergeBitmap = useMergeBitmap();
+  const flag = (
+      activeCell.colIdx === colIdx || (
+      mergeBitmap[activeCell?.rowIdx]?.[colIdx] &&
+      mergeBitmap[activeCell?.rowIdx]?.[activeCell?.colIdx]
+    )
+  );
+  if (flag) {
+    return true;
+  }
   return activeCell.colIdx === colIdx;
 }
 
 export function useIsActiveRow(rowIdx: number): boolean {
   const activeCell = useAppSelector(state => state.cells.activeCell);
+  const mergeBitmap = useMergeBitmap();
+  const flag = (
+      activeCell.rowIdx === rowIdx || (
+      mergeBitmap[rowIdx]?.[activeCell?.colIdx] &&
+      mergeBitmap[activeCell?.rowIdx]?.[activeCell?.colIdx]  // TODO: something wrong here
+    )
+  );
+  if (flag) {
+    return true;
+  }
   return activeCell.rowIdx === rowIdx;
 }
 
