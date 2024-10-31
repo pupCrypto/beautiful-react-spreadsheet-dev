@@ -8,6 +8,7 @@ import {
   useDispatchSetBold,
   useCellsSelector,
   useDispatchSetCellValue,
+  useDispatchSetActiveCell,
 } from "./features/cells/hooks";
 import { useDispatchSetMerge } from "./features/merge/hooks";
 
@@ -16,7 +17,11 @@ export function useApi() {
   const merge = useDispatchSetMerge();
   const setCellValue = useDispatchSetCellValue();
   const cellsSelector = useCellsSelector();
+  const setActiveCell = useDispatchSetActiveCell();
   return {
+    activateCell: (colIdx: number, rowIdx: number) => {
+      setActiveCell(colIdx, rowIdx);
+    },
     mergeCells: (fromCell: {colIdx: number, rowIdx: number}, toCell: {colIdx: number, rowIdx: number}) => {
       if (fromCell.colIdx > toCell.colIdx) {
         throw new Error("toCell.colIdx must be greater than fromCell.colIdx");
@@ -61,7 +66,7 @@ export function useCellApi(colIdx: number, rowIdx: number) {
   const setFontSize = useDispatchSetFontSize(colIdx, rowIdx);
   return {
     get fontSize() {
-      return fontSize || 12;
+      return fontSize || 14;
     },
     set fontSize(v: number) {
       setFontSize(v);

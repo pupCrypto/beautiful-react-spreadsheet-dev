@@ -49,6 +49,7 @@ export default function Cell(props: PropsType) {
 
   const onClick = () => {
     // console.log(props.colIdx, props.rowIdx, getValue());
+    // api.value = 'test';
   }
   const onMouseDown = () => {
     setIsPressed(true);
@@ -62,7 +63,18 @@ export default function Cell(props: PropsType) {
     setIsEditing(true);
   }
 
-  const onInput = () => {
+  // const onInput = (e: any) => {
+  //   if (!isEditing) {
+  //     setIsEditing(true);
+  //   }
+  //   api.value = getValue();
+  // }
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      console.log('enter');
+    }
     if (!isEditing) {
       setIsEditing(true);
     }
@@ -111,7 +123,8 @@ export default function Cell(props: PropsType) {
           ref={inputRef}
           is-editing={isEditing ? 'yes' : undefined}
           className="cell__input"
-          onInput={onInput}
+          // onInput={onInput}
+          onKeyDown={onKeyDown}
           contentEditable
           style={cellStyle}
           spellCheck={false}

@@ -16,6 +16,7 @@ export default function BeautifulSpreadsheet() {
     cellApi.bold = true;
     cellApi.italic = true;
     cellApi.fontSize = 20;
+    api.activateCell(2, 2);
   }, []);
   return (
     <>
