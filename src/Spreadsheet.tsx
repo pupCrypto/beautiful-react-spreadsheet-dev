@@ -13,9 +13,6 @@ export default function BeautifulSpreadsheet() {
   const cellApi = useCellApi(0, 0);
   React.useEffect(() => {
     api.mergeCells({ colIdx: 0, rowIdx: 0 }, { colIdx: 1, rowIdx: 2 });
-    cellApi.bold = true;
-    cellApi.italic = true;
-    cellApi.fontSize = 20;
     api.activateCell(2, 2);
   }, []);
   return (

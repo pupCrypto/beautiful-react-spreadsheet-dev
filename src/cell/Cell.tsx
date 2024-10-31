@@ -1,7 +1,7 @@
 import React from "react";
 import { useCellHeight } from "../features/global/hooks.ts";
 import { ContextMenuRefContext } from "../Spreadsheet.tsx";
-import { useCellApi } from "../api.ts";
+import { useApi, useCellApi } from "../api.ts";
 import './Cell.css';
 import { useOverflown } from "../hooks/overflow.ts";
 
@@ -18,6 +18,7 @@ interface PropsType {
 }
 
 export default function Cell(props: PropsType) {
+  const globalApi = useApi();
   const api = useCellApi(props.colIdx, props.rowIdx);
   const contextMenuRef = React.useContext(ContextMenuRefContext);
   const [isEditing, setIsEditing] = React.useState(false);
@@ -26,6 +27,7 @@ export default function Cell(props: PropsType) {
   const [value, setValue] = React.useState<string | undefined>();
   const [isHovered, setIsHovered] = React.useState(false);
   const [isPressed, setIsPressed] = React.useState(false);
+  const [isClicked, setIsClicked] = React.useState(false);
   const isOverflown = useOverflown(inputRef);
 
   const cellStyle = {  // TODO: redo on classes
@@ -47,9 +49,11 @@ export default function Cell(props: PropsType) {
     setIsHovered(false);
   }
 
+  const onFocus = () => {}
+
   const onClick = () => {
-    // console.log(props.colIdx, props.rowIdx, getValue());
-    // api.value = 'test';
+    setIsClicked(true);
+    inputRef.current?.focus();
   }
   const onMouseDown = () => {
     setIsPressed(true);
@@ -63,23 +67,31 @@ export default function Cell(props: PropsType) {
     setIsEditing(true);
   }
 
-  // const onInput = (e: any) => {
-  //   if (!isEditing) {
-  //     setIsEditing(true);
-  //   }
-  //   api.value = getValue();
-  // }
-
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      console.log('enter');
+      inputRef.current?.blur();
+      setIsClicked(false);
+      return globalApi.activateCell(props.colIdx, props.rowIdx + 1);
     }
+
+    if (!isClicked) {
+      if (e.key in ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'])
+        e.preventDefault();
+      if (e.key === 'ArrowUp') globalApi.activateCell(props.colIdx, props.rowIdx - 1);
+      if (e.key === 'ArrowDown') globalApi.activateCell(props.colIdx, props.rowIdx + 1);
+      if (e.key === 'ArrowLeft') globalApi.activateCell(props.colIdx - 1, props.rowIdx);
+      if (e.key === 'ArrowRight') globalApi.activateCell(props.colIdx + 1, props.rowIdx);
+      return setIsClicked(false);
+    }
+
     if (!isEditing) {
       setIsEditing(true);
     }
     api.value = getValue();
   }
+
+  const onKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {}
 
   const onContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
@@ -95,6 +107,9 @@ export default function Cell(props: PropsType) {
   React.useEffect(() => {
     if (!props.isActive) {
       setIsEditing(false);
+    }
+    if (props.isActive) {
+      inputRef.current?.focus();
     }
   }, [props.isActive]);
 
@@ -123,8 +138,9 @@ export default function Cell(props: PropsType) {
           ref={inputRef}
           is-editing={isEditing ? 'yes' : undefined}
           className="cell__input"
-          // onInput={onInput}
           onKeyDown={onKeyDown}
+          onKeyUp={onKeyUp}
+          onFocus={onFocus}
           contentEditable
           style={cellStyle}
           spellCheck={false}

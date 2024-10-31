@@ -3,6 +3,14 @@ import { editCell, setActiveCell, setCellValue } from "./slice.ts";
 import { useMergeBitmap } from "../merge/hooks";
 
 
+export function useSpreadsheetSize() {
+  const cells = useAppSelector(state => state.cells);
+  return {
+    colsCount: cells.cells[0].length,
+    rowsCount: cells.cells.length,
+  };
+}
+
 export function useCellFontSize(colIdx: number, rowIdx: number) {
   return useAppSelector(state => state.cells.cells[rowIdx][colIdx].fontSize);
 }

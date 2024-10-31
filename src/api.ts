@@ -9,17 +9,23 @@ import {
   useCellsSelector,
   useDispatchSetCellValue,
   useDispatchSetActiveCell,
+  useSpreadsheetSize,
 } from "./features/cells/hooks";
 import { useDispatchSetMerge } from "./features/merge/hooks";
 
 
 export function useApi() {
+  const { colsCount, rowsCount } = useSpreadsheetSize();
   const merge = useDispatchSetMerge();
   const setCellValue = useDispatchSetCellValue();
   const cellsSelector = useCellsSelector();
   const setActiveCell = useDispatchSetActiveCell();
   return {
     activateCell: (colIdx: number, rowIdx: number) => {
+      if (colIdx < 0) colIdx = 0;
+      if (rowIdx < 0) rowIdx = 0;
+      if (colIdx >= colsCount) colIdx = colsCount - 1;
+      if (rowIdx >= rowsCount) rowIdx = rowsCount - 1;
       setActiveCell(colIdx, rowIdx);
     },
     mergeCells: (fromCell: {colIdx: number, rowIdx: number}, toCell: {colIdx: number, rowIdx: number}) => {
