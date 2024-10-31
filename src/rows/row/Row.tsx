@@ -4,7 +4,7 @@ import { genCellKey } from "../../utils/spreadsheet";
 import { useMergeBitmap } from "../../features/merge/hooks";
 import { checkInMergeArea } from "../../utils/bitmap";
 import "./Row.css";
-import { useActiveCell, useDispatchSetActiveCell } from "../../features/cells/hooks";
+import { useActiveCell, useDispatchSetActiveCell, useIsActiveRow } from "../../features/cells/hooks";
 
 
 interface PropsType {
@@ -16,7 +16,7 @@ interface PropsType {
 export default function Row(props: PropsType) {
   const mergeBitmap = useMergeBitmap();
   const activeCell = useActiveCell();
-  const isActiveRow = activeCell.rowIdx === props.index;
+  const isActiveRow = useIsActiveRow(props.index);
   const setActiveCell = useDispatchSetActiveCell();
   const onCellPressed = (colIdx: number, rowIdx: number) => {
     setActiveCell(colIdx, rowIdx);
