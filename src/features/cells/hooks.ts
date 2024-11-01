@@ -1,7 +1,18 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { editCell, setActiveCell, setCellValue } from "./slice.ts";
+import { editCell, setActiveCell, setCellValue, setCellPressed } from "./slice.ts";
 import { useMergeBitmap } from "../merge/hooks";
 
+
+export function usePressedCell() {
+  return useAppSelector(state => state.cells.pressedCell);
+}
+
+export function useDispatchSetPressedCell() {
+  const dispatch = useAppDispatch();
+  return (colIdx: number, rowIdx: number) => {
+    dispatch(setCellPressed({ colIdx, rowIdx }));
+  };
+}
 
 export function useSpreadsheetSize() {
   const cells = useAppSelector(state => state.cells);

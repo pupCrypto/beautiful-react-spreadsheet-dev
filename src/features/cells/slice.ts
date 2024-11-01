@@ -10,8 +10,18 @@ export interface CellsState {
     color?: string;
     underline?: boolean;
     fontSize?: number;
+    borders?: {
+      top?: { color?: string, width?: number };
+      bottom?: { color?: string, width?: number };
+      left?: { color?: string, width?: number };
+      right?: { color?: string, width?: number };
+    };
   }>>;
   activeCell: {
+    colIdx: number,
+    rowIdx: number,
+  };
+  pressedCell?: {
     colIdx: number,
     rowIdx: number,
   };
@@ -33,6 +43,10 @@ const initialState = {
     colIdx: 0,
     rowIdx: 0,
   },
+  pressedCell: {
+    colIdx: -1,
+    rowIdx: -1,
+  },
   selectedRange: {
     start: {
       colIdx: -1,
@@ -49,6 +63,12 @@ const cellsSlice = createSlice({
   name: 'cells',
   initialState,
   reducers: {
+    clearCellPressed: (state: CellsState) => {
+      state.pressedCell = {
+        colIdx: -1,
+        rowIdx: -1,
+      };
+    },
     editCell: (
       state: CellsState,
       action: PayloadAction<{
@@ -63,6 +83,15 @@ const cellsSlice = createSlice({
     setCellValue: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number, value: string }>) => {
       state.cells[action.payload.rowIdx][action.payload.colIdx].value = action.payload.value;
     },
+    setCellPressed: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number }>) => {
+      if (action.payload.colIdx < 0) {
+        throw new Error("colIdx must be greater than 0");
+      }
+      if (action.payload.rowIdx < 0) {
+        throw new Error("rowIdx must be greater than 0");
+      }
+      state.pressedCell = action.payload;
+    },
     setActiveCell: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number }>) => {
       state.activeCell = action.payload;
     },
@@ -72,5 +101,5 @@ const cellsSlice = createSlice({
   },
 });
 
-export const { editCell, setActiveCell, setSelectedRange, setCellValue } = cellsSlice.actions;
+export const { editCell, setActiveCell, setSelectedRange, setCellValue, setCellPressed } = cellsSlice.actions;
 export default cellsSlice.reducer;
