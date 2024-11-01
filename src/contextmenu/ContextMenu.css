@@ -1,0 +1,28 @@
+.spreadsheet__context-menu {
+  background-color: white;
+  padding: 6px 0;
+  border-radius: 4px;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.spreadsheet__context-menu > *:focus {
+  outline: none;
+}
+
+.context-menu__item {
+  padding: 5px 10px;
+  display: flex;
+  gap: 5px;
+}
+.context-menu__item:focus {
+  outline: none;
+}
+.context-menu__item:hover {
+  cursor: pointer;
+  background-color: #f1f3f4;
+}
+
+.context-menu__item__shortcut {
+  margin-left: auto;
+  color: gray;
+}

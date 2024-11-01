@@ -1,6 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
+export interface Borders {
+  top?: Border;
+  bottom?: Border;
+  left?: Border;
+  right?: Border;
+}
+
+export interface Border {
+  color?: string;
+  width?: number;
+}
+
 export interface CellsState {
   cells: Array<Array<{
     value?: string;
@@ -10,12 +22,7 @@ export interface CellsState {
     color?: string;
     underline?: boolean;
     fontSize?: number;
-    borders?: {
-      top?: { color?: string, width?: number };
-      bottom?: { color?: string, width?: number };
-      left?: { color?: string, width?: number };
-      right?: { color?: string, width?: number };
-    };
+    borders?: Borders;
   }>>;
   activeCell: {
     colIdx: number,

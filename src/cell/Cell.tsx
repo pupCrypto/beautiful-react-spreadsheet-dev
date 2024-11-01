@@ -37,6 +37,13 @@ export default function Cell(props: PropsType) {
     fontSize: api.fontSize,
   };
 
+  const tdStyle = {
+    borderTop: api.borders?.top ? `${api.borders?.top?.width}px solid ${api.borders?.top?.color}` : undefined,
+    borderBottom: api.borders?.bottom ? `${api.borders?.bottom?.width}px solid ${api.borders?.bottom?.color}` : undefined,
+    borderLeft: api.borders?.left ? `${api.borders?.left?.width}px solid ${api.borders?.left?.color}` : undefined,
+    borderRight: api.borders?.right ? `${api.borders?.right?.width}px solid ${api.borders?.right?.color}` : undefined,
+  }
+
   const getValue = () => {
     return inputRef.current?.innerText;
   }
@@ -130,6 +137,7 @@ export default function Cell(props: PropsType) {
       onMouseLeave={onMouseLeave}
       colSpan={props.colSpan}
       rowSpan={props.rowSpan}
+      style={tdStyle}
     >
       <div
         className="cell__container"

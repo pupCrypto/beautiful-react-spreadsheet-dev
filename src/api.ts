@@ -10,7 +10,10 @@ import {
   useDispatchSetCellValue,
   useDispatchSetActiveCell,
   useSpreadsheetSize,
+  useBorders,
+  useDispatchSetBorders,
 } from "./features/cells/hooks";
+import { Borders } from "./features/cells/slice";
 import { useDispatchSetMerge } from "./features/merge/hooks";
 
 
@@ -59,6 +62,9 @@ export function useApi() {
 }
 
 export function useCellApi(colIdx: number, rowIdx: number) {
+  const borders = useBorders(colIdx, rowIdx);
+  const setBorders = useDispatchSetBorders(colIdx, rowIdx);
+
   const value = useCellValue(colIdx, rowIdx);
   const setCellValue = useDispatchSetCellValue();
 
@@ -71,6 +77,12 @@ export function useCellApi(colIdx: number, rowIdx: number) {
   const fontSize = useCellFontSize(colIdx, rowIdx);
   const setFontSize = useDispatchSetFontSize(colIdx, rowIdx);
   return {
+    get borders(): Borders {
+      return borders;
+    },
+    set borders(v: object) {
+      setBorders(v);
+    },
     get fontSize() {
       return fontSize || 14;
     },

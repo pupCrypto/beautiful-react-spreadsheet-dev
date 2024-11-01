@@ -3,6 +3,17 @@ import { editCell, setActiveCell, setCellValue, setCellPressed } from "./slice.t
 import { useMergeBitmap } from "../merge/hooks";
 
 
+export function useBorders(colIdx: number, rowIdx: number) {
+  return useAppSelector(state => state.cells.cells[rowIdx][colIdx].borders);
+}
+
+export function useDispatchSetBorders(colIdx: number, rowIdx: number) {
+  const dispatch = useAppDispatch();
+  return (borders: object) => {
+    dispatch(editCell({ colIdx, rowIdx, data: { borders } }));
+  }
+}
+
 export function usePressedCell() {
   return useAppSelector(state => state.cells.pressedCell);
 }
