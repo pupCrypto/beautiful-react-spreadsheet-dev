@@ -13,6 +13,7 @@ interface PropsType {
   rowIdx: number;
   isActive?: boolean;
   defaultValue?: number | string | boolean | undefined;
+  isInSelection?: boolean;
   onCellPressed?: (colIdx: number, rowIdx: number) => void;
   onCellRelease?: (colIdx: number, rowIdx: number) => void;
 }
@@ -127,6 +128,7 @@ export default function Cell(props: PropsType) {
   return (
     <td
       is-selected={props.isActive ? 'yes' : undefined}
+      in-selection={props.isInSelection ? 'yes' : undefined}
       className="cell"
       onClick={onClick}
       onMouseDown={onMouseDown}

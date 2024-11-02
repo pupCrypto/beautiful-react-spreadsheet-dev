@@ -3,6 +3,7 @@ import Cell from "../../cell/Cell";
 import { genCellKey } from "../../utils/spreadsheet";
 import { useMergeBitmap } from "../../features/merge/hooks";
 import { checkInMergeArea } from "../../utils/bitmap";
+import { useApi } from "../../api";
 import "./Row.css";
 import { useActiveCell, useDispatchSetActiveCell, useIsActiveRow } from "../../features/cells/hooks";
 
@@ -14,12 +15,17 @@ interface PropsType {
 }
 
 export default function Row(props: PropsType) {
+  const api = useApi();
   const mergeBitmap = useMergeBitmap();
   const activeCell = useActiveCell();
   const isActiveRow = useIsActiveRow(props.index);
-  const setActiveCell = useDispatchSetActiveCell();
+
   const onCellPressed = (colIdx: number, rowIdx: number) => {
-    setActiveCell(colIdx, rowIdx);
+    api.activateCell(colIdx, rowIdx);
+    api.setPressedCell(colIdx, rowIdx);
+  }
+  const onCellReleased = (colIdx: number, rowIdx: number) => {
+    api.setSelectedRange(api.pressedCell, { colIdx, rowIdx });
   }
   const checkIfActive = (colIdx: number, rowIdx: number) => {
     return activeCell.colIdx === colIdx && activeCell.rowIdx === rowIdx;
@@ -41,6 +47,11 @@ export default function Row(props: PropsType) {
       rowSpan,
     };
   };
+
+  const checkIfInSelection = (colIdx: number, rowIdx: number) => {
+    return api.selectedRange.start.colIdx <= colIdx && api.selectedRange.start.rowIdx <= rowIdx &&
+    api.selectedRange.end.colIdx >= colIdx && api.selectedRange.end.rowIdx >= rowIdx;
+  }
 
   const checkMustPass = (colIdx: number, rowIdx: number) => {
     if (
@@ -72,7 +83,9 @@ export default function Row(props: PropsType) {
             colIdx={colIdx}
             rowIdx={props.index}
             onCellPressed={onCellPressed}
+            onCellRelease={onCellReleased}
             isActive={checkIfActive(colIdx, props.index)}
+            isInSelection={checkIfInSelection(colIdx, props.index)}
           />
       );
       })}

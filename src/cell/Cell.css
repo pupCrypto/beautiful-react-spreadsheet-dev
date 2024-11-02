@@ -4,9 +4,17 @@
   font-size: 14px;
   max-width: 95px;
   vertical-align: top;
+  padding: 4px;
 }
 .cell[is-selected] {
   outline: 2px solid rgb(0, 110, 255);
+}
+
+.cell[in-selection] {
+  background-color: #e7f0fd;
+}
+.cell[in-selection] * {
+  background-color: #e7f0fd;
 }
 
 .cell:hover {

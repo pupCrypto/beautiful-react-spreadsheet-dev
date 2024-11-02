@@ -1,7 +1,18 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import { editCell, setActiveCell, setCellValue, setCellPressed } from "./slice.ts";
+import { editCell, setSelectedRange, setActiveCell, setCellValue, setPressedCell } from "./slice.ts";
 import { useMergeBitmap } from "../merge/hooks";
 
+
+export function useDispatchSetSelectedRange() {
+  const dispatch = useAppDispatch();
+  return (start: { colIdx: number, rowIdx: number }, end: { colIdx: number, rowIdx: number }) => {
+    dispatch(setSelectedRange({ start, end }));
+  };
+}
+
+export function useSelectedRange() {
+  return useAppSelector(state => state.cells.selectedRange);
+}
 
 export function useBorders(colIdx: number, rowIdx: number) {
   return useAppSelector(state => state.cells.cells[rowIdx][colIdx].borders);
@@ -21,7 +32,7 @@ export function usePressedCell() {
 export function useDispatchSetPressedCell() {
   const dispatch = useAppDispatch();
   return (colIdx: number, rowIdx: number) => {
-    dispatch(setCellPressed({ colIdx, rowIdx }));
+    dispatch(setPressedCell({ colIdx, rowIdx }));
   };
 }
 

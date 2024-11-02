@@ -1,3 +1,4 @@
+import { clear } from "@testing-library/user-event/dist/clear";
 import {
   useCellFontSize,
   useDispatchSetFontSize,
@@ -12,6 +13,10 @@ import {
   useSpreadsheetSize,
   useBorders,
   useDispatchSetBorders,
+  useDispatchSetPressedCell,
+  usePressedCell,
+  useDispatchSetSelectedRange,
+  useSelectedRange,
 } from "./features/cells/hooks";
 import { Borders } from "./features/cells/slice";
 import { useDispatchSetMerge } from "./features/merge/hooks";
@@ -23,6 +28,11 @@ export function useApi() {
   const setCellValue = useDispatchSetCellValue();
   const cellsSelector = useCellsSelector();
   const setActiveCell = useDispatchSetActiveCell();
+  const setPressedCell = useDispatchSetPressedCell();
+  const pressedCell = usePressedCell();
+  const setSelectedRange = useDispatchSetSelectedRange();
+  const selectedRange = useSelectedRange();
+
   return {
     activateCell: (colIdx: number, rowIdx: number) => {
       if (colIdx < 0) colIdx = 0;
@@ -39,6 +49,38 @@ export function useApi() {
         throw new Error("toCell.rowIdx must be greater than fromCell.rowIdx");
       }
       merge(fromCell, toCell);
+    },
+    get selectedRange() {
+      return selectedRange;
+    },
+    get pressedCell() {
+      return pressedCell;
+    },
+    clearSelectedRange() {
+      setSelectedRange({ colIdx: -1, rowIdx: -1 }, { colIdx: -1, rowIdx: -1 }); 
+      return {
+        start: { colIdx: -1, rowIdx: -1 },
+        end: { colIdx: -1, rowIdx: -1 }, 
+      };
+    },
+    setSelectedRange(start: { colIdx: number, rowIdx: number }, end: { colIdx: number, rowIdx: number }) {
+      if (start.colIdx === end.colIdx && start.rowIdx === end.rowIdx) return;
+      const newStart = {
+        colIdx: Math.min(start.colIdx, end.colIdx),
+        rowIdx: Math.min(start.rowIdx, end.rowIdx),
+      };
+      const newEnd = {
+        colIdx: Math.max(start.colIdx, end.colIdx),
+        rowIdx: Math.max(start.rowIdx, end.rowIdx),
+      };
+      setSelectedRange(newStart, newEnd);
+      return {
+        start: newStart,
+        end: newEnd,
+      };
+    },
+    setPressedCell: (colIdx: number, rowIdx: number) => {
+      setPressedCell(colIdx, rowIdx);
     },
     setWidth: (colIdx: number, rowIdx: number, width: number) => {
       console.log(colIdx, rowIdx, width);

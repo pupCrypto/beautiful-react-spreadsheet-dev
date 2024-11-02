@@ -90,7 +90,7 @@ const cellsSlice = createSlice({
     setCellValue: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number, value: string }>) => {
       state.cells[action.payload.rowIdx][action.payload.colIdx].value = action.payload.value;
     },
-    setCellPressed: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number }>) => {
+    setPressedCell: (state: CellsState, action: PayloadAction<{ colIdx: number, rowIdx: number }>) => {
       if (action.payload.colIdx < 0) {
         throw new Error("colIdx must be greater than 0");
       }
@@ -108,5 +108,5 @@ const cellsSlice = createSlice({
   },
 });
 
-export const { editCell, setActiveCell, setSelectedRange, setCellValue, setCellPressed } = cellsSlice.actions;
+export const { editCell, setActiveCell, setSelectedRange, setCellValue, setPressedCell } = cellsSlice.actions;
 export default cellsSlice.reducer;
